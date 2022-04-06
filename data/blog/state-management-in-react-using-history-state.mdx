@@ -1,0 +1,226 @@
+---
+title: "How to notify sate changes between 2 components that use the same custom hook with local-state?"
+publishedAt: "2020-04-08"
+summary: "States defined in custom hooks are local to its use in every component. Meaning updating state in one component doesn't reflect in another."
+tags: ["ReactJs","React Hooks", "Observer Pattern"]
+---
+
+There are some cases where there is a need to share a common state between 2 different instances of the same hook used in 2 different components which can be placed at any level in the hierarchy. 
+
+There are certainly many ways to acheive this, one common 
+approach would be to use ContextAPI but, using ContextAPI for such a scenario easily makes code messy and the API itself is over-engineered to be used in this scenario. And one obvious solution to this
+is using a state management tool like mobX or redux. But the point here is to write minimal code and acheive this without using any third party libraries.
+
+So what if we had a way to notify each instance that a state has changed in one of the instance and the others should update their local-state accordingly. This can be possible only if we had a callback
+to trigger whenever a state change event is triggered in any one of the instances.
+
+This is a typical case of one-to-many relationship where, if one object is modified, its depenedent objects are to be notified automatically. This is where the Observer pattern is used. 
+It specifies communication between objects: `observable` and `observers`. An observable is an object which notifies observers about the changes in its state. 
+
+> Observer is a behavioral design pattern that lets you define a subscription mechanism to notify multiple objects about any events that happen to the object they’re observing.
+
+Observer pattern falls under behavioral pattern category.
+
+To get started let us begin by creating a custom hook that hosts a local state which will get set on a button click and reset after a 2s time delay.
+
+```js:useButtonLock.js
+import React, {useState} from 'react'; 
+
+const useButtonLock = () => {
+
+    const [isPending, setPending] = useState(false);
+
+    const triggerProcess = () => {
+        setPending(true);
+        setTimeout(() => {
+            setPending(false);
+        }, 2*1000);
+    }
+
+    return [isLoading, triggerProcess]
+}
+
+export default useButtonLock
+```
+
+Now let's define our App component which renders 3 buttons which use the above hook to trigger a blocking process.
+
+```js:App.js
+import react from "react";
+import useButtonLock  from "./useButtonLock";
+
+const ComponentA = () => {
+    const [isLoading, triggerProcess] = useButtonLock();
+    return (
+        <h1>Component A</h1>
+        <button onClick={triggerProcess}>{ isLoading ? "Please wait..." : "Click to trigger process A"}</button>
+    );
+};
+
+const ComponentB = () => {
+    return (
+        <h1>Component B</h1>
+        <ComponentD/>
+    );
+};
+
+const ComponentC = () => {
+    const [isLoading, triggerProcess] = useButtonLock();
+    return (
+        <h1>Component C</h1>
+        <button onClick={triggerProcess}>{ isLoading ? "Please wait..." : "Click to trigger process C"}</button>
+    );
+};
+
+const ComponentD = () => {
+    const [isLoading, triggerProcess] = useButtonLock();
+    return (
+        <h1>Component D</h1>
+        <button onClick={triggerProcess}>{ isLoading ? "Please wait..." : "Click to trigger process D"}</button>
+    );
+};
+
+const App = () => {
+    return (
+        <ComponentA/>
+        <ComponentB/>
+        <ComponentC/>
+    );
+};
+
+export default App
+```
+
+Out of the 3 components that render a button let's say we want to share the state between `ComponentA` and `ComponentD`. To do that lets build our Observerable object.
+
+```js:Observable.js
+function Observable() {
+    this.observers = [];
+}
+
+Observable.prototype = {
+    subscribe: function(fn) {
+        this.observers.push(fn);
+    },
+    unsubscribe: function(fn) {
+        this.observers.filter(_fn => fn !== _fn ? _fn : null);
+    },
+    notify: function(args) {
+        this.observers.forEach(fn => {
+            fn.call(this, args)
+        });
+    },
+}
+
+export default Observable
+```
+
+We need to import this in our custom hook and create an Observable object instance as below.
+
+```js:useButtonLock.js
+...
+import Observable from './Observable';
+
+const observable = new Observable();
+
+...
+```
+
+We can then use this to subscribe our state update calls.
+
+```js:useButtonLock.js
+import React, {useState} from 'react'; 
+import Observable from './Observable';
+
+const observable = new Observable();
+
+const useButtonLock = (shouldSubscribeForGlobalChanges = false) => {
+
+    const [isPending, setPending] = useState(false);
+
+    useEffect(() => {
+        if(shouldSubscribeForGlobalChanges){
+            const fn = x => setPending(x);
+            observable.subscribe(fn);
+            return () => observable.unsubscribe(fn);
+        }
+    },[shouldSubscribeForGlobalChanges])
+
+    const triggerProcess = () => {
+         if(shouldSubscribeForGlobalChanges){
+            observable.notify(true)
+        }else{
+            setPending(true);
+        }
+        setTimeout(() => {
+             if(shouldSubscribeForGlobalChanges){
+            observable.notify(false)
+        }else{
+            setPending(false);
+        }
+        }, 2*1000);
+    }
+
+    return [isLoading, triggerProcess, shouldSubscribeForGlobalChanges]
+}
+
+export default useButtonLock
+```
+
+This completes our custom hook that is updated with a boolean config `shouldSubscribeForGlobalChanges` which provides an option to subscribe to global changes or not. If subscribed then the `isLoading` will
+be updated accordingly when there is a button click on any of the hook's instance.
+
+Now lets pass this config from our components A and D.
+
+
+```js:App.js
+import react from "react";
+import useButtonLock  from "./useButtonLock";
+
+const ComponentA = () => {
+    const [isLoading, triggerProcess] = useButtonLock(true);
+    return (
+        <h1>Component A</h1>
+        <button onClick={triggerProcess}>{ isLoading ? "Please wait..." : "Click to trigger process A"}</button>
+    );
+};
+
+const ComponentB = () => {
+    return (
+        <h1>Component B</h1>
+        <ComponentD/>
+    );
+};
+
+const ComponentC = () => {
+    const [isLoading, triggerProcess] = useButtonLock();
+    return (
+        <h1>Component C</h1>
+        <button onClick={triggerProcess}>{ isLoading ? "Please wait..." : "Click to trigger process C"}</button>
+    );
+};
+
+const ComponentD = () => {
+    const [isLoading, triggerProcess] = useButtonLock(true);
+    return (
+        <h1>Component D</h1>
+        <button onClick={triggerProcess}>{ isLoading ? "Please wait..." : "Click to trigger process D"}</button>
+    );
+};
+
+const App = () => {
+    return (
+        <ComponentA/>
+        <ComponentB/>
+        <ComponentC/>
+    );
+};
+
+export default App
+```
+
+By running this, we can see that on click of button A button D gets a loading text while button C remains un affected. This is because, component A and D are registered but component C isn't. 
+
+That's the end of this blog, which showed you how 2 instances which hosts a local state can be notified of a state change in either one of the components. 
+
+Thanks for reading..!!!!
