@@ -15,7 +15,7 @@ import Container from '../components/Container'
 import { getAllFilesFrontMatter } from '../lib/mdx'
 import BlogPost from '../components/BlogPost'
 
-import { SearchIcon } from '@chakra-ui/icons'
+// import { SearchIcon } from '@chakra-ui/icons'
 
 const headingColor = {
     light: 'gray.700',
@@ -57,7 +57,7 @@ export default function Blog({ posts }) {
                         w='100%'
                         px={4}
                     >
-                        <InputGroup mb={10} mr={4} w="100%">
+                        {/* <InputGroup mb={10} mr={4} w="100%">
                             <Input
                                 aria-label={`Search ${posts.length} posts by title`}
                                 placeholder={`Search ${posts.length} posts by title`}
@@ -67,7 +67,7 @@ export default function Blog({ posts }) {
                             <InputRightElement>
                                 <SearchIcon w={5} h={5} color={headingColor[colorMode]} />
                             </InputRightElement>
-                        </InputGroup>
+                        </InputGroup> */}
                         {!filteredBlogPosts.length && <Text width='100%'>
                         😞 No posts found. Perhaps try a less specific search phrase.
                         </Text>}

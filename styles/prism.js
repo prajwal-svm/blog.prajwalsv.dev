@@ -24,6 +24,21 @@ const prismBaseTheme = css`
     -ms-hyphens: none;
     hyphens: none;
     width: 100%;
+
+    &::-webkit-scrollbar {
+      height: 8px;           
+    }
+
+    &::-webkit-scrollbar-track {
+      background:  rgba(0,0,0,0.3);   
+    }
+    
+    &::-webkit-scrollbar-thumb {
+      background-color:  ${theme.colors.gray[600]};   
+      cursor: pointer;
+      border-radius: 20px;       
+    }
+
   }
   /* Code blocks */
   pre[class*='language-'] {

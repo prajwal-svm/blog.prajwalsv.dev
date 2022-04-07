@@ -48,9 +48,9 @@ const BlogPost = ({ title, difficulty, publishedAt, summary, tags="", slug }) =>
                     </Flex>
                     <Text color={secondaryTextColor[colorMode]}>{summary}</Text>
 
-                    <Flex spacing={4} mt={4}>
+                    <Flex spacing={4} mt={4} flexWrap="wrap">
                         {tags.map((tag) => (
-                            <Tag size="md" mr="2" key={tag} variant='outline' colorScheme='pink'>
+                            <Tag size="md" mr="2" mt="3" key={tag} variant='outline' colorScheme='teal'>
                                 {tag}
                             </Tag>
                         ))}

@@ -4,7 +4,8 @@ import {
     Text,
     Flex,
     Box,
-    Avatar
+    Avatar,
+    Link
 } from '@chakra-ui/react'
 import NextLink from 'next/link'
 import styled from '@emotion/styled'
@@ -71,7 +72,7 @@ const Container = ({ children, showBackButton }) => {
                     <Avatar bg='primary' border={`2px solid ${colorMode === 'light' ? 'black' : primaryDarkColor}`} size='lg' name='Prajwal SV' src={process.env.NEXT_PUBLIC_AVATAR} />
                 </NextLink>
                 <Flex pb={2} pl="10px" justifyContent="space-between" alignItems="start" flexDir="column">
-                  <Text fontSize="20px" fontWeight={600} color={headingColor[colorMode]}>Prajwal S Venkatesh</Text>
+                  <NextLink href="https://www.prajwalsv.dev" fontSize="20px" fontWeight={600} color={headingColor[colorMode]}>Prajwal S Venkatesh</NextLink>
                    <Text fontSize="14px" fontWeight={600} color={titleColor[colorMode]}>Mid Frontend Engineer @Certa</Text>
                   </Flex>
                 </FlexBox>

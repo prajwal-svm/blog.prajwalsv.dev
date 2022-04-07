@@ -119,7 +119,7 @@ const MDXComponents = {
     h5: (props) => <DocsHeading as="h5" size="sm" fontWeight="bold" {...props} />,
     h6: (props) => <DocsHeading as="h6" size="xs" fontWeight="bold" {...props} />,
     inlineCode: (props) => (
-        <Code colorScheme="green" fontSize="0.94em" {...props} />
+        <Code colorScheme="cyan" fontSize="0.94em" borderRadius="4" pb='0.5' {...props} />
     ),
     br: (props) => <Box height="24px" {...props} />,
     hr: Hr,
