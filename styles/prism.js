@@ -2,9 +2,28 @@ import { css } from '@emotion/react'
 import { theme } from '@chakra-ui/react'
 
 const prismBaseTheme = css`
-    code {
+  code {
     white-space: pre;
   }
+
+  .table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  th,
+  td {
+    border: 1px solid #274774;
+    padding: 4px 6px;
+  }
+
+  summary {
+    color: hotpink;
+    font-size: 16px;
+    text-transform: uppercase;
+    font-family: monospace;
+  }
+
   code[class*='language-'],
   pre[class*='language-'] {
     color: ${theme.colors.gray[800]};
@@ -26,19 +45,18 @@ const prismBaseTheme = css`
     width: 100%;
 
     &::-webkit-scrollbar {
-      height: 8px;           
+      height: 8px;
     }
 
     &::-webkit-scrollbar-track {
-      background:  rgba(0,0,0,0.3);   
-    }
-    
-    &::-webkit-scrollbar-thumb {
-      background-color:  ${theme.colors.gray[600]};   
-      cursor: pointer;
-      border-radius: 20px;       
+      background: rgba(0, 0, 0, 0.3);
     }
 
+    &::-webkit-scrollbar-thumb {
+      background-color: ${theme.colors.gray[600]};
+      cursor: pointer;
+      border-radius: 20px;
+    }
   }
   /* Code blocks */
   pre[class*='language-'] {
@@ -151,19 +169,31 @@ const prismBaseTheme = css`
       border-top-right-radius: 0;
       margin-top: 0 !important;
     }
+    border: 1px solid ${theme.colors.gray[700]};
+
+    &::before {
+      display: contents;
+      content: '🔴🟡🟢     ';
+      height: 10px;
+      position: absolute;
+      border-radius: 100px;
+
+      cursor: pointer;
+    }
   }
 `
 
 export const prismLightTheme = css`
-    ${prismBaseTheme};
-    code[class*='language-'],
+  ${prismBaseTheme};
+  code[class*='language-'],
   pre[class*='language-'] {
     color: ${theme.colors.gray[800]};
   }
   :not(pre) > code[class*='language-'],
   pre[class*='language-'] {
     background: ${theme.colors.gray[50]};
-    border: 1px solid ${theme.colors.gray[200]};
+    border: 1px solid ${theme.colors.gray[700]};
+    border-top: 1px solid ${theme.colors.gray[200]};
   }
   .mdx-marker {
     background-color: hsla(204, 45%, 96%, 1);
@@ -171,8 +201,8 @@ export const prismLightTheme = css`
 `
 
 export const prismDarkTheme = css`
-    ${prismBaseTheme};
-    :not(pre) > code[class*='language-'] {
+  ${prismBaseTheme};
+  :not(pre) > code[class*='language-'] {
     background: #011627;
   }
   .token.attr-name {
@@ -239,5 +269,15 @@ export const prismDarkTheme = css`
     background: ${theme.colors.gray[700]};
     color: ${theme.colors.gray[100]};
     border: 1px solid ${theme.colors.gray[700]};
+
+    &::before {
+      display: contents;
+      content: '🔴🟡🟢     ';
+      height: 10px;
+      position: absolute;
+      border-radius: 100px;
+
+      cursor: pointer;
+    }
   }
 `

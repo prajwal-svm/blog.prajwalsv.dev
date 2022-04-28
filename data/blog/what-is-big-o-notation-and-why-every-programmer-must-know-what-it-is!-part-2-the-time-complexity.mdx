@@ -1,0 +1,206 @@
+---
+title: 'What is Big O Notation And Why Every Programmer Must Know What It Is! 👉 Part 2 - Time Complexity Analysis'
+publishedAt: '2022-04-28'
+summary: 'Learn how to analyse the Time Complexity of a given algorithm...'
+tags: ['Asymptotic Analysis', 'Algorithms', 'Time Complexity']
+---
+
+> This is a 3 Part Series and you're in 2nd part of this series.
+
+![Big O graphs](https://miro.medium.com/max/1200/1*5ZLci3SuR0zM_QlZOADv8Q.jpeg)
+
+<small>
+  Source: <a href='http://bigocheatsheet.com/'>Big O Cheat Sheet</a>
+</small>
+
+If you're viewing this post for the first time, I highly recommend you to go through the
+[Part 1](http://localhost:3000/blog/what-is-big-o-notation-and-why-every-programmer-must-know-what-it-is!-part-1-the-time-complexity)
+of What is Big O Notation And Why Every Programmer Must Know What It Is! series ...
+
+As mentioned previously, Big O notation doesn't show the time an algorithm will consume to run successfully.
+Instead, it shows the number of operations it will perform. It tells you how fast an algorithm grows and lets you compare it with others.
+
+Consider the below code, where an array is defined with 100 integers
+
+```py
+oneToHundred = list(range(1, 101))
+```
+
+If we were to print a number from the above list, assuming that the acccess to any element in a list is always a constant access then,
+the TC of the following code is `O(1)`
+
+```py: 
+oneToHundred = list(range(1, 101))
+
+print(oneToHundred[0])  # constant time
+print(oneToHundred[50]) # constant time
+print(oneToHundred[99]) # constant time
+```
+
+> Analysis: Each print accesses a single element from the array, each of which can be accessed in a constant time say one instruction or step.
+> Now since there are 3 print statements, the total cmplexity would be O(1 + 1 + 1) = O(3) => O(1). If in case the input gows to 1 billion elements, this code
+> will still take exactly 3 instructions to run. Hence we say that the above code runs in constant time.
+
+If we were to print all the numbers from the above list, assuming that the acccess to any element in a list is always a constant access then,
+the TC of the following code is `O(n)`
+
+```py: 
+oneToHundred = list(range(1, 101))
+
+for i in range(len(oneToHundred)):   # loop from first to last element
+    print(oneToHundred[i])           # constant time
+```
+
+> Analysis: The code loops from the start of the list till the end of the list and prints the elements onto the console. Since there are 100 elements, we say
+> the TC is O(100) = O(n) where n is the length of the input. If in case the input gows to 1 billion elements, this code
+> will take exactly 1 billion instructions to run. Hence we say that the above code runs in linear time.
+
+The TC of the following code is also `O(n)`
+
+```py: 
+oneToHundred = list(range(1, 101))
+
+for i in range(len(oneToHundred)/2):   # loop from first to mid element
+    print(oneToHundred[i])             # constant time
+```
+
+> Analysis: The code loops from the start of the list till the mid element of the list and prints the elements onto the console. Since there are 100 elements, we say
+> the TC is O(50) = O(n/2) where n is the length of the input. But remember in Big-O analysis we always care about the dominant term and drop off the constants as the
+> input size grows. Hence in general we say the above code takes O(n) time to run.
+
+Next, let's explore the TC of the famous Binary Search Algorithm.
+
+```py: 
+oneToHundred = list(range(1, 101))       # Sorted Array
+
+def binary_search(inputList, elementToFind):
+    low = mid = 0
+    high = len(inputList) - 1
+
+    while low <= high:
+        mid = (high + low) // 2
+        if inputList[mid] < elementToFind:   # If elementToFind is greater,
+            low = mid + 1                    # ignore left half
+        elif inputList[mid] > elementToFind: # If elementToFind is smaller,
+            high = mid - 1                   # ignore right half
+        else:
+            return mid                       # elementToFind is present at mid
+    return -1                            # If we reach here, then the element was not present
+
+
+print(binary_search(oneToHundred, 10))
+```
+
+In the above code we see that a lower and the higher bounds are established, and we loop until the lower bound exceeds the higher bound at some point.
+Since this loop is different from the for loop which traditionally had a initial index and a range that we say earlier, you might think finding the TC of this algorithm is hard. But its not...
+why? because we already have the lower and upper bounds established and we know that initially `high - low = n` where n is the length of the input array. Furthermore,
+If we observe the code inside the loop we see that the logic branches in 3 ways, in the first 2 cases it seems we are reducing the bounds by half and in the 3rd case
+it's a simple return, which halts the function execution. The 3rd case obviously takes constant time since it executes ones in its lifetime.
+
+Arguably, the first and the second conditions, when executed are reducing the bounds by half each time. The question is how many times must we divide
+our input in half until we get down to 1? Assume there are `x` such divisions.
+
+```py
+n * 1/2 * 1/2 * 1/2 * 1/2 * .... = 1  # keep on reducing the bound by half until we go down to 1
+```
+
+On simplification, we get **n = 2<sup>x</sup>**, where `x` is the number of time we must divide to get down to 1. We don't know `x` yet but let's simplify further.
+But how do we get the x out of the exponent? Logarithms! (High School Math 😏)
+
+Taking **log<sub>2</sub>** on both sides, we get **log<sub>2</sub>(n)=x**. We have thus simplified for x, which means that the number of times we must divide `n`
+in half to get down to `1` is **log<sub>2</sub>(n)**. Hence our simplified TC is `O(log(n))`.
+
+> The above code with 100 elements in imput takes exactly 7 steps to execute successfully. log(100) = 6.64 ~ 7. If we had 1000 elements in the input then the
+> algorithm would take 10 steps to execute successfully. log(1000) = 9.97 ~ 10. Overall, algorithms with O(log(n)) complexity are highly efficient their
+> corresponding linear solutions.
+
+Time to celebrate 🎉🥳🎊, No Kiddin! This was definitely hard to digest if you are a beginner, but let it sink in. Once you understand it, you'll never forget it!
+
+As a challenge, let's test to see if you really understood all the analysis stratergies we discussed up until now. Can you find the TC of the following code ?
+
+```py: 
+oneToHundred = list(range(1, 1001))
+
+low = 1
+high = len(oneToHundred)
+
+while low <= high:
+    print(low)
+    low *= 2
+```
+
+<details>
+  <summary>Solution</summary>
+  <details>
+    <summary>Did you really solve or you giving up ?</summary>
+    <details>
+      <summary>Give it another try before revealing the answer ?</summary>
+      <br />
+      <div style={{borderLeft: '5px solid #90cdf4', padding: '10px', background: '#1a365d'}}>
+        The answer is O(log(n)), this is similar to the Binary Search algorithm.
+        There we divided the input by half each time until we reached 1. In contrast, here we are starting from 1 and reaching n by
+        multiplying 2 in each iteration
+      </div>
+      <br />
+    </details>
+  </details>
+</details>
+
+> More Examples will be added in the future 🥰. Until then you can skim through the Big-O Refresher and Cheatsheets below.
+
+## Big-O Refresher & Cheatsheet 🚀
+
+### Big O notations and their performance comparisons against different sizes of the input data
+
+<div className="table-wrapper">
+
+| Big O Notation | Type        | Computations for 10 elements | Computations for 100 elements | Computations for 1000 elements |
+| -------------- | ----------- | ---------------------------- | ----------------------------- | ------------------------------ |
+| **O(1)**       | Constant    | 1                            | 1                             | 1                              |
+| **O(log N)**   | Logarithmic | 3                            | 6                             | 9                              |
+| **O(N)**       | Linear      | 10                           | 100                           | 1000                           |
+| **O(N log N)** | n log(n)    | 30                           | 600                           | 9000                           |
+| **O(N^2)**     | Quadratic   | 100                          | 10000                         | 1000000                        |
+| **O(2^N)**     | Exponential | 1024                         | 1.26e+29                      | 1.07e+301                      |
+| **O(N!)**      | Factorial   | 3628800                      | 9.3e+157                      | 4.02e+2567                     |
+
+</div>
+
+### Data Structure Operations Complexity
+
+<div className="table-wrapper">
+
+| Data Structure         | Access | Search | Insertion | Deletion | Comments                                             |
+| ---------------------- | :----: | :----: | :-------: | :------: | :--------------------------------------------------- |
+| **Array**              |   1    |   n    |     n     |    n     |                                                      |
+| **Stack**              |   n    |   n    |     1     |    1     |                                                      |
+| **Queue**              |   n    |   n    |     1     |    1     |                                                      |
+| **Linked List**        |   n    |   n    |     1     |    n     |                                                      |
+| **Hash Table**         |   -    |   n    |     n     |    n     | In case of perfect hash function costs would be O(1) |
+| **Binary Search Tree** |   n    |   n    |     n     |    n     | In case of balanced tree costs would be O(log(n))    |
+| **B-Tree**             | log(n) | log(n) |  log(n)   |  log(n)  |                                                      |
+| **Red-Black Tree**     | log(n) | log(n) |  log(n)   |  log(n)  |                                                      |
+| **AVL Tree**           | log(n) | log(n) |  log(n)   |  log(n)  |                                                      |
+| **Bloom Filter**       |   -    |   1    |     1     |    -     | False positives are possible while searching         |
+
+</div>
+
+### Array Sorting Algorithms Complexity
+
+<div className="table-wrapper">
+
+| Name               |     Best      |         Average         |            Worst            | Memory | Stable | Comments                                                      |
+| ------------------ | :-----------: | :---------------------: | :-------------------------: | :----: | :----: | :------------------------------------------------------------ |
+| **Bubble sort**    |       n       |      n<sup>2</sup>      |        n<sup>2</sup>        |   1    |  Yes   |                                                               |
+| **Insertion sort** |       n       |      n<sup>2</sup>      |        n<sup>2</sup>        |   1    |  Yes   |                                                               |
+| **Selection sort** | n<sup>2</sup> |      n<sup>2</sup>      |        n<sup>2</sup>        |   1    |   No   |                                                               |
+| **Heap sort**      | n&nbsp;log(n) |      n&nbsp;log(n)      |        n&nbsp;log(n)        |   1    |   No   |                                                               |
+| **Merge sort**     | n&nbsp;log(n) |      n&nbsp;log(n)      |        n&nbsp;log(n)        |   n    |  Yes   |                                                               |
+| **Quick sort**     | n&nbsp;log(n) |      n&nbsp;log(n)      |        n<sup>2</sup>        | log(n) |   No   | Quicksort is usually done in-place with O(log(n)) stack space |
+| **Shell sort**     | n&nbsp;log(n) | depends on gap sequence | n&nbsp;(log(n))<sup>2</sup> |   1    |   No   |                                                               |
+| **Counting sort**  |     n + r     |          n + r          |            n + r            | n + r  |  Yes   | r - biggest number in array                                   |
+| **Radix sort**     |    n \* k     |         n \* k          |           n \* k            | n + k  |  Yes   | k - length of longest key                                     |
+
+</div>
+
+In the next part we will understand how to analyse the **Space Complexity** for a given algorithm.
