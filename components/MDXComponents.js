@@ -111,6 +111,8 @@ const Hr = () => {
     return <Divider borderColor={borderColor[colorMode]} my={4} w="100%" />
 }
 
+
+
 const MDXComponents = {
     h1: (props) => <Heading as="h1" size="xl" my={4} {...props} />,
     h2: (props) => <DocsHeading as="h2" size="lg" fontWeight="bold" {...props} />,
@@ -118,9 +120,7 @@ const MDXComponents = {
     h4: (props) => <DocsHeading as="h4" size="sm" fontWeight="bold" {...props} />,
     h5: (props) => <DocsHeading as="h5" size="sm" fontWeight="bold" {...props} />,
     h6: (props) => <DocsHeading as="h6" size="xs" fontWeight="bold" {...props} />,
-    inlineCode: (props) => (
-        <Code colorScheme="cyan" fontSize="0.94em" borderRadius="4" pb='0.5' {...props} />
-    ),
+
     br: (props) => <Box height="24px" {...props} />,
     hr: Hr,
     a: CustomLink,
@@ -128,7 +128,82 @@ const MDXComponents = {
     ul: (props) => <Box as="ul" pt={2} pl={4} ml={2} {...props} />,
     ol: (props) => <Box as="ol" pt={2} pl={4} ml={2} {...props} />,
     li: (props) => <Box as="li" pb={1} {...props} />,
-    blockquote: Quote,
+    // Style blockquote
+
+    blockquote: (props) => (
+        <Quote bg="#091a41" borderColor="#3b82f6"  {...props} />
+    ),
+    table: (props) => <Box as="table" textAlign="left" mt="32px" width="full" {...props} />,
+    th: (props) => {
+        const { colorMode } = useColorMode()
+        const thColor = {
+            light: 'gray.200',
+            dark: 'gray.900'
+        }
+        return (
+            <Box
+                as="th"
+                bg={thColor[colorMode]}
+                fontWeight="semibold"
+                p={2}
+                fontSize="sm"
+                {...props}
+            />
+        )
+    },
+    td: (props) => {
+        const { colorMode } = useColorMode()
+        const tdColor = {
+            light: 'gray.100',
+            dark: 'gray.800'
+        }
+        return (
+            <Box
+                as="td"
+                p={2}
+                bg={tdColor[colorMode]}
+                borderTopWidth="1px"
+                fontSize="sm"
+                whiteSpace="normal"
+                {...props}
+            />
+        )
+    },
+    sup: (props) => <Box as="sup" fontSize="xs" verticalAlign="super" {...props} />,
+    kbd: (props) => (
+        <Box
+            as="kbd"
+            bg="gray.100"
+            borderRadius="4px"
+            border="1px solid"
+            borderColor="gray.200"
+            fontSize="0.84em"
+            fontWeight="bold"
+            p={1}
+            {...props}
+        />
+    ),
+    code: Code,
+    inlineCode: (props) => {
+        const { colorMode } = useColorMode()
+        const bgColor = {
+            light: 'gray.100',
+            dark: 'gray.700'
+        }
+        return (
+            <Code
+                fontSize="0.84em"
+                fontWeight={600}
+                colorScheme={colorMode === 'dark' ? 'gray' : 'blue'}
+                bg={bgColor[colorMode]}
+                borderRadius="4"
+                pb='0.5'
+                px="1"
+                {...props}
+            />
+        )
+    },
+
 }
 
 export default MDXComponents

@@ -8,12 +8,15 @@ import {
     InputGroup,
     InputRightElement,
     Text,
-    useColorMode
+    useColorMode,
+    Image,
+    Grid
 } from '@chakra-ui/react'
 
 import Container from '../components/Container'
 import { getAllFilesFrontMatter } from '../lib/mdx'
 import BlogPost from '../components/BlogPost'
+import { SearchIcon } from '@chakra-ui/icons'
 
 // import { SearchIcon } from '@chakra-ui/icons'
 
@@ -36,7 +39,7 @@ export default function Blog({ posts }) {
     return (
         <>
             <Head>
-                <title>Blog - Prajwal S Venkatesh</title>
+                <title>Blog - Prajwal S Venkateshmurthy</title>
             </Head>
             <Container>
                 <Stack
@@ -57,21 +60,38 @@ export default function Blog({ posts }) {
                         w='100%'
                         px={4}
                     >
-                        {/* <InputGroup mb={10} mr={4} w="100%">
+                        <InputGroup mb={10} mr={4} w={{
+                            xs: "100%",
+                            sm: "90%",
+                            md: "80%",
+                            lg: "80%"
+                        }} mx="auto" outline="none">
                             <Input
+                                size="md"
                                 aria-label={`Search ${posts.length} posts by title`}
-                                placeholder={`Search ${posts.length} posts by title`}
-                                borderColor="#233554" variant="outline" size='md' type='text'
+                                placeholder={`Search`}
+                                borderColor="#233554"
+                                type='text'
                                 onChange={(e) => setSearchValue(e.target.value)}
+                                borderRadius="20px"
+                                pl="20px"
+                                outline="none"
+                                focusBorderColor='#1d4ed8'
+                                _placeholder={{ color: headingColor[colorMode] }}
+                                spellCheck='false'
+                                autoCorrect
                             />
                             <InputRightElement>
-                                <SearchIcon w={5} h={5} color={headingColor[colorMode]} />
+                                <SearchIcon w={4} h={4} color={headingColor[colorMode]} mb="0" mr="2" />
                             </InputRightElement>
-                        </InputGroup> */}
-                        {!filteredBlogPosts.length && <Text width='100%'>
-                        😞 No posts found. Perhaps try a less specific search phrase.
+                        </InputGroup>
+                        {!filteredBlogPosts.length && <Text width='100%' align="center" fontSize="16px" color={headingColor[colorMode]}>
+                            <Image src="/empty_blog.svg" w="80" h="60" m="auto" pb="10" />
+                            No posts found. Perhaps you could try a less specific search phrase.
                         </Text>}
-                        {filteredBlogPosts.map((frontMatter) => <BlogPost key={frontMatter.title} {...frontMatter} />)}
+                        <Grid templateColumns='repeat(1, 1fr)' gap={4}>
+                            {filteredBlogPosts.map((frontMatter) => <BlogPost key={frontMatter.title} {...frontMatter} />)}
+                        </Grid>
                     </Flex>
                 </Stack>
             </Container>
@@ -80,7 +100,7 @@ export default function Blog({ posts }) {
 }
 
 export async function getStaticProps() {
-const posts = await getAllFilesFrontMatter('blog')
+    const posts = await getAllFilesFrontMatter('blog')
 
     return { props: { posts } }
 }

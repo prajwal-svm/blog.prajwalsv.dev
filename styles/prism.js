@@ -18,10 +18,11 @@ const prismBaseTheme = css`
   }
 
   summary {
-    color: hotpink;
+    color: #22c55e;
     font-size: 16px;
     text-transform: uppercase;
     font-family: monospace;
+    cursor: pointer;
   }
 
   code[class*='language-'],

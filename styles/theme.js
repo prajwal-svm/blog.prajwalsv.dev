@@ -2,7 +2,7 @@ import { theme as chakraTheme } from '@chakra-ui/react'
 import { extendTheme } from "@chakra-ui/react"
 import { createBreakpoints } from "@chakra-ui/theme-tools"
 
-export const primaryDarkColor = '#64ffda';
+export const primaryDarkColor = '#2563eb';
 
 const fonts = {
     ...chakraTheme.fonts,

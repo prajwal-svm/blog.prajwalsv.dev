@@ -2,8 +2,9 @@ import React from 'react'
 import NextLink from 'next/link'
 import { useColorMode, Heading, Text, Flex, Box, Link, Tag } from '@chakra-ui/react'
 import { parseISO, format } from 'date-fns'
+import { CalendarIcon } from '@chakra-ui/icons'
 
-const BlogPost = ({ title, difficulty, publishedAt, summary, tags="", slug }) => {
+const BlogPost = ({ title, difficulty, publishedAt, summary, tags = "", slug }) => {
     const { colorMode } = useColorMode()
     const secondaryTextColor = {
         light: 'gray.700',
@@ -18,17 +19,18 @@ const BlogPost = ({ title, difficulty, publishedAt, summary, tags="", slug }) =>
 
     return (
         <NextLink borderRadius={10} href={`blog/${slug}`} passHref>
-            <Link w="100%" borderRadius={10} p={4} _hover={{ textDecoration: 'none', background: 'rgba(255,255,255,0.03)' }}>
-                <Box mb={2} display="block" width="100%" borderRadius={10}>
+            <Link w="100%" borderRadius={10} px={8} py={6} my="2" _hover={{ textDecoration: 'none', background: 'rgba(255,255,255,0.03)', border: "1px solid #2563eb" }}
+                border="1px solid #233554">
+                <Box mb={2} display="block" width="100%" borderRadius={10} >
                     <Flex
                         mb='2'
                         width="100%"
                         align="flex-start"
                         justifyContent="space-between"
-                        flexDirection={['column', 'column', 'row']}
+                        flexDirection={['column', 'column', 'column']}
                     >
                         <Flex align="flex-start" justifyContent="start" width="100%">
-                            <Heading size="md" as="h3" mb={1} fontWeight="medium">
+                            <Heading size="md" as="h3" mb={1} fontWeight="medium" noOfLines={1}>
                                 {title}
                             </Heading>
                             {difficulty && <Tag mx={4} size="sm" colorScheme={DifficultyColor[difficulty]} width="max-content">
@@ -36,21 +38,28 @@ const BlogPost = ({ title, difficulty, publishedAt, summary, tags="", slug }) =>
                             </Tag>}
                         </Flex>
 
-                        <Text
-                            color="gray.500"
-                            minWidth="140px"
-                            textAlign={['left', 'right']}
-                            mb={[4, 0]}
-                        >
-                            {format(parseISO(publishedAt), 'MMMM dd, yyyy')}
-                        </Text>
+                        <Flex alignItems="start" justifyContent="start" width="100%" mb="1" pt="1" >
+                            <CalendarIcon fontSize={11} color="#718096" />
+                            <Text
+                                color="gray.500"
+                                minWidth="140px"
+                                textAlign='left'
+                                ml="1.5"
+                                mt="-0.5"
+                                fontSize={10}
+                            >
+                                {format(parseISO(publishedAt), 'MMMM dd, yyyy')}
+                            </Text>
+                        </Flex>
+
+
 
                     </Flex>
-                    <Text color={secondaryTextColor[colorMode]}>{summary}</Text>
+                    <Text fontSize={12} color={secondaryTextColor[colorMode]}>{summary}</Text>
 
-                    <Flex spacing={4} mt={4} flexWrap="wrap">
+                    <Flex spacing={2} mt={2} flexWrap="wrap">
                         {tags.map((tag) => (
-                            <Tag size="md" mr="2" mt="3" key={tag} variant='outline' colorScheme='teal'>
+                            <Tag size="sm" fontSize="8" mr="2" mt="2" key={tag} variant='subtle' border="none" >
                                 {tag}
                             </Tag>
                         ))}

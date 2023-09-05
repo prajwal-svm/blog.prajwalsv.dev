@@ -42,7 +42,7 @@ const SectionHeader = ({ sectionIndex, sectionTitle }) => {
 
     return <Box w="100%" style={{ position: 'relative' }}>
         <StyledHeading as="h2" size="2xl" lineBg={colorMode === 'light' ? 'lightgray' : '#233554'}>
-            <StyledDiv bgColor={colorMode === 'light' ? 'white' : '#0a192f'}>
+            <StyledDiv bgColor={colorMode === 'light' ? 'white' : '#020817'}>
                 <IndexSpan color={colorMode === 'light' ? 'darkgray' : primaryDarkColor}>
                     0{sectionIndex}.
                 </IndexSpan>
