@@ -135,6 +135,7 @@ const MDXComponents = {
     ),
     table: (props) => <Box as="table" textAlign="left" mt="32px" width="full" {...props} />,
     th: (props) => {
+        // eslint-disable-next-line react-hooks/rules-of-hooks
         const { colorMode } = useColorMode()
         const thColor = {
             light: 'gray.200',
@@ -152,6 +153,7 @@ const MDXComponents = {
         )
     },
     td: (props) => {
+        // eslint-disable-next-line react-hooks/rules-of-hooks
         const { colorMode } = useColorMode()
         const tdColor = {
             light: 'gray.100',
@@ -185,6 +187,7 @@ const MDXComponents = {
     ),
     code: Code,
     inlineCode: (props) => {
+        // eslint-disable-next-line react-hooks/rules-of-hooks
         const { colorMode } = useColorMode()
         const bgColor = {
             light: 'gray.100',
