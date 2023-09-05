@@ -1,21 +1,23 @@
 <p align="center">
   <img width='100' height='100' src="public/android-chrome-192x192.png" />
+  <p align="center">
+  <a href="https://blog.prajwalsv.dev" target="_blank">
+   🔹blog.prajwalsv.dev🔹
+  </a>
+</p>
   <h1 align="center">Prajwal S Venkatesh</h1>
 </p>
 
-<a href="https://prajwalsv.dev/">
+This blog is built using Next.js and Chakra UI, two powerful technologies that enable me to create a sleek and responsive webfolio. It serves as a platform for me to share my thoughts, experiences, and knowledge on a variety of topics. I hope you find the content valuable and engaging.
 
-![askdm](/assets/home_view.png)
+## Contributing
 
-</a>
+If you'd like to contribute to this blog, please feel free to open issues or pull requests. I welcome any suggestions, bug reports, or improvements.
 
-<p align="center">
-  <img src="https://img.shields.io/github/deployments/Prajwal-S-Venkatesh/personal-website/production?label=Vercel&logo=Vercel&logoColor=white"  />
-  <img src="https://img.shields.io/github/license/Prajwal-S-Venkatesh/personal-website"  />
-  <img src="https://img.shields.io/twitter/url?url=https://github.com/Prajwal-S-Venkatesh/personal-website"  />
-</p>
+## License
 
+This blog is open-source and available under the [MIT License](LICENSE).
 
-Welcome to my `personal-blog`'s github repo. This is my webfolio that I created for myself using NextJS and Chakra UI. I've added a blog section where I post about my personal experiences in life, tech, design, finance and much much more. I always wanted to build my own webfolio and publish blogs under my own domain, so here it is finally!! 🚀
+---
 
-# blog.prajwalsv.dev
+Thank you for visiting my personal blog repository! I hope you enjoy reading my posts as much as I enjoy writing them. Feel free to explore the code and make contributions if you'd like. Happy blogging!

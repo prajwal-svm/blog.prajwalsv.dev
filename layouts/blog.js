@@ -56,8 +56,8 @@ export default function BlogLayout({ children, frontMatter }) {
 
                     <Flex
                         justify="space-between"
-                        align={['initial', 'center']}
-                        direction={['column', 'row']}
+                        alignItems={['initial', 'initial', 'center']}
+                        direction={['column', 'column', 'row']}
                         mt={2}
                         w="100%"
                         mb={4}
@@ -100,12 +100,20 @@ export default function BlogLayout({ children, frontMatter }) {
                             </Box>
                             <Text fontSize="sm" color={textColor[colorMode]}>
                                 {frontMatter.by}
-                                {'Prajwal S Venkatesh - '}
-                                {format(parseISO(frontMatter.publishedAt), 'MMM dd, yyyy')}
+                                {'Prajwal S Venkatesh '}
+                                
                             </Text>
                         </Flex>
 
-                        <Box display="flex" justifyContent="space-between" w="200px">
+                        <Box display="flex" justifyContent="space-between" w="340px" mt={{
+                            xs: 6,
+                            sm: 0
+
+                        }}>
+                        <Text fontSize="sm" variant='subtle' mt={[2, 0]} display="flex" alignItems="center" color={textColor[colorMode]}>
+                                <FaClock /> &nbsp;&nbsp;{format(parseISO(frontMatter.publishedAt), 'MMM dd, yyyy')}
+                            </Text>
+
                             <Text fontSize="sm" variant='subtle' mt={[2, 0]} display="flex" alignItems="center" color={textColor[colorMode]}>
                                 <FaClock /> &nbsp;&nbsp;{frontMatter.readingTime.text}
                             </Text>

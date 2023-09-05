@@ -1,11 +1,11 @@
 {
-  "theme_color": "#4fd1c5",
+  "theme_color": "#020817",
   "background_color": "#020817",
   "display": "standalone",
   "scope": "/",
   "start_url": "/",
   "name": "Prajwal S Venkatesh",
-  "short_name": "Prajwal's personl blog",
+  "short_name": "Prajwal's Blog",
   "icons": [
     {
       "src": "/android-chrome-512x512.png",
