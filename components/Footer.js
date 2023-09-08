@@ -24,7 +24,7 @@ const Footer = () => {
 
         <Divider orientation='horizontal' borderColor={colorMode === 'light' ? 'lightgray' : '#233554'} />
         <Center w="100%" pt={2} color={colorSecondary[colorMode]}>
-            Copyright &copy; 2022 Prajwal S Venkatesh
+            Copyright &copy; 2023 Prajwal S Venkatesh
         </Center>
         <Center fontSize="14px" display={['none', 'none', 'flex']} w="100%" color={colorSecondary[colorMode]}>
             Made with ❤️ using &nbsp;
