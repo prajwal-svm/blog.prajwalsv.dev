@@ -1,7 +1,5 @@
 import React from 'react'
-import { Center, Link, Divider, Stack, Icon, Flex, useColorMode } from '@chakra-ui/react'
-import { FaGithub, FaInstagram, FaLinkedinIn, FaTwitter } from "react-icons/fa";
-import { MdMailOutline } from "react-icons/md";
+import { Center, Divider, Stack, useColorMode } from '@chakra-ui/react'
 
 const colorSecondary = {
     light: 'gray.700',
@@ -24,7 +22,7 @@ const Footer = () => {
 
         <Divider orientation='horizontal' borderColor={colorMode === 'light' ? 'lightgray' : '#233554'} />
         <Center w="100%" pt={2} color={colorSecondary[colorMode]}>
-            Copyright &copy; 2023 Prajwal S Venkatesh
+            Copyright &copy; 2023 Prajwal S Venkateshmurthy
         </Center>
         <Center fontSize="14px" display={['none', 'none', 'flex']} w="100%" color={colorSecondary[colorMode]}>
             Made with ❤️ using &nbsp;

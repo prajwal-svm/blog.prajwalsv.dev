@@ -18,7 +18,7 @@ const BlogPost = ({ title, difficulty, publishedAt, summary, tags = "", slug }) 
     }
 
     return (
-        <NextLink borderRadius={10} href={`blog/${slug}`} passHref>
+        <NextLink borderRadius={10} href={`/blog/${slug}`} passHref>
             <Link w="100%" borderRadius={10} px={8} py={6} my="2" _hover={{ textDecoration: 'none', background: 'rgba(255,255,255,0.03)', border: "1px solid #2563eb" }}
                 border="1px solid #233554">
                 <Box mb={2} display="block" width="100%" borderRadius={10} >

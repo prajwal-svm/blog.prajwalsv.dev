@@ -79,7 +79,7 @@ export default function Blog({ posts }) {
                                 focusBorderColor='#1d4ed8'
                                 _placeholder={{ color: headingColor[colorMode] }}
                                 spellCheck='false'
-                                autoCorrect
+                                autoCorrect='true'
                             />
                             <InputRightElement>
                                 <SearchIcon w={4} h={4} color={headingColor[colorMode]} mb="0" mr="2" />

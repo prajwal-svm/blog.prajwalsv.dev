@@ -17,6 +17,7 @@ import Container from '../components/Container'
 import BlogComments from '../components/BlogComments'
 import { primaryDarkColor } from '../styles/theme'
 import { FaBook, FaClock } from 'react-icons/fa'
+import { CalendarIcon } from '@chakra-ui/icons'
 
 const capitalize = (s) => s.split('-').reduce((a, c) => `${a} ${c[0].toUpperCase()}${c.slice(1)}`, '')
 
@@ -100,8 +101,8 @@ export default function BlogLayout({ children, frontMatter }) {
                             </Box>
                             <Text fontSize="sm" color={textColor[colorMode]}>
                                 {frontMatter.by}
-                                {'Prajwal S Venkatesh '}
-                                
+                                {'@Prajwal S Venkateshmurthy'}
+
                             </Text>
                         </Flex>
 
@@ -110,8 +111,8 @@ export default function BlogLayout({ children, frontMatter }) {
                             sm: 0
 
                         }}>
-                        <Text fontSize="sm" variant='subtle' mt={[2, 0]} display="flex" alignItems="center" color={textColor[colorMode]}>
-                                <FaClock /> &nbsp;&nbsp;{format(parseISO(frontMatter.publishedAt), 'MMM dd, yyyy')}
+                            <Text fontSize="sm" variant='subtle' mt={[2, 0]} display="flex" alignItems="center" color={textColor[colorMode]}>
+                                <CalendarIcon />&nbsp;&nbsp;{format(parseISO(frontMatter.publishedAt), 'MMM dd, yyyy')}
                             </Text>
 
                             <Text fontSize="sm" variant='subtle' mt={[2, 0]} display="flex" alignItems="center" color={textColor[colorMode]}>
