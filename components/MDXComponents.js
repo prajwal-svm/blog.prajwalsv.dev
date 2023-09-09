@@ -1,3 +1,4 @@
+import { CheckCircleIcon, CheckIcon, CopyIcon } from '@chakra-ui/icons';
 import {
     Box,
     Alert,
@@ -6,8 +7,12 @@ import {
     Link,
     Text,
     Divider,
-    useColorMode
+    useColorMode,
+    IconButton,
+    Tooltip,
+    useClipboard
 } from '@chakra-ui/react';
+import styled from '@emotion/styled';
 import NextLink from 'next/link'
 
 export const CustomLink = (props) => {
@@ -111,6 +116,12 @@ const Hr = () => {
     return <Divider borderColor={borderColor[colorMode]} my={4} w="100%" />
 }
 
+const StyledCode = styled(Code)`
+    span {
+        display: block !important;
+    }
+`;
+
 
 
 const MDXComponents = {
@@ -185,7 +196,50 @@ const MDXComponents = {
             {...props}
         />
     ),
-    code: Code,
+    code: (props) => {
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        const { onCopy, hasCopied } = useClipboard("");
+        return (
+            <Box as="pre" position="relative" w="auto" h="auto">
+                <Code
+                    {...props}
+                    border='0px !important'
+                />
+                <Tooltip label={hasCopied ? "Copied!" : "Copy"} placement="top" hasArrow>
+                    <IconButton
+                        aria-label="Copy code"
+                        variant="ghost"
+                        size="xs"
+                        fontSize="md"
+                        colorScheme="gray"
+                        icon={hasCopied ? <CheckCircleIcon color="#22c55e" /> : <CopyIcon />}
+                        position="absolute"
+                        top="-10px"
+                        right="-8px"
+                        py="2"
+                        zIndex={999}
+                        _focusVisible={
+                            {
+                                outline: 'none !important',
+                                boxShadow: 'none !important'
+                            }
+                        }
+                        boxShadow="none !important"
+                        onClick={() => {
+                            const code = props.children.reduce((a, c) => {
+                                if (typeof c === 'string') return a + c
+                                return a + c.props.children
+                            }, '');
+
+                            navigator.clipboard.writeText(code);
+                            onCopy();
+                        }
+                        }
+                    />
+                </Tooltip>
+            </Box>
+        )
+    },
     inlineCode: (props) => {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const { colorMode } = useColorMode()

@@ -174,7 +174,7 @@ const prismBaseTheme = css`
 
     &::before {
       display: contents;
-      content: '🔴🟡🟢     ';
+      content: '🔴 🟡 🟢     ';
       height: 10px;
       position: absolute;
       border-radius: 100px;
