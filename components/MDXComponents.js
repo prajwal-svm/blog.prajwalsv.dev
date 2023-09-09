@@ -14,6 +14,7 @@ import {
 } from '@chakra-ui/react';
 import styled from '@emotion/styled';
 import NextLink from 'next/link'
+import { primaryDarkColor } from '../styles/theme';
 
 export const CustomLink = (props) => {
     const { colorMode } = useColorMode()
@@ -116,18 +117,25 @@ const Hr = () => {
     return <Divider borderColor={borderColor[colorMode]} my={4} w="100%" />
 }
 
-const StyledCode = styled(Code)`
-    span {
-        display: block !important;
-    }
-`;
-
 
 
 const MDXComponents = {
     h1: (props) => <Heading as="h1" size="xl" my={4} {...props} />,
-    h2: (props) => <DocsHeading as="h2" size="lg" fontWeight="bold" {...props} />,
-    h3: (props) => <DocsHeading as="h3" size="md" fontWeight="bold" {...props} />,
+    h2: (props) => <DocsHeading
+        as="h2"
+        size="lg"
+        fontWeight="bold"
+        textDecoration="underline"
+        textDecorationStyle="wavy"
+        textDecorationColor={primaryDarkColor}
+        {...props}
+    />,
+    h3: (props) => <DocsHeading
+        as="h3"
+        size="md"
+        fontWeight="bold"
+        {...props}
+    />,
     h4: (props) => <DocsHeading as="h4" size="sm" fontWeight="bold" {...props} />,
     h5: (props) => <DocsHeading as="h5" size="sm" fontWeight="bold" {...props} />,
     h6: (props) => <DocsHeading as="h6" size="xs" fontWeight="bold" {...props} />,
@@ -205,7 +213,7 @@ const MDXComponents = {
                     {...props}
                     border='0px !important'
                 />
-                <Tooltip label={hasCopied ? "Copied!" : "Copy"} placement="top" hasArrow>
+                <Tooltip label={hasCopied ? "Copied!" : "Copy"} placement="right" hasArrow>
                     <IconButton
                         aria-label="Copy code"
                         variant="ghost"
@@ -217,13 +225,6 @@ const MDXComponents = {
                         top="-10px"
                         right="-8px"
                         py="2"
-                        zIndex={999}
-                        _focusVisible={
-                            {
-                                outline: 'none !important',
-                                boxShadow: 'none !important'
-                            }
-                        }
                         boxShadow="none !important"
                         onClick={() => {
                             const code = props.children.reduce((a, c) => {

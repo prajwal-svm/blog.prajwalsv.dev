@@ -1,9 +1,11 @@
-import { useColorMode, IconButton, Flex } from '@chakra-ui/react'
-import { SunIcon, MoonIcon, ArrowBackIcon, ExternalLinkIcon } from '@chakra-ui/icons'
+import { useColorMode, IconButton, Flex, useClipboard } from '@chakra-ui/react'
+import { SunIcon, MoonIcon, ArrowBackIcon, ExternalLinkIcon, CheckCircleIcon } from '@chakra-ui/icons'
 import { Tooltip } from '@chakra-ui/react'
 
 const DarkModeSwitch = ({ showBackButton }) => {
-    const { colorMode, toggleColorMode } = useColorMode()
+    const { colorMode, toggleColorMode } = useColorMode();
+    const { onCopy, hasCopied } = useClipboard("");
+
     const iconColor = {
         light: 'black',
         dark: 'white'
@@ -13,7 +15,7 @@ const DarkModeSwitch = ({ showBackButton }) => {
         const url = window.location.href;
         if (navigator.share) {
             const title = document.title.split(' - ')[0];
-            const text = 'Check out this article by Prajwal S Venkateshmurthy!\n';
+            const text = 'Check out this insightful article by Prajwal S Venkateshmurthy!\n';
             navigator.share({
                 title,
                 text,
@@ -30,6 +32,7 @@ const DarkModeSwitch = ({ showBackButton }) => {
             el.select()
             document.execCommand('copy')
             document.body.removeChild(el)
+            onCopy();
         }
     }
 
@@ -46,12 +49,13 @@ const DarkModeSwitch = ({ showBackButton }) => {
                     />
                 </Tooltip>
             }
-            <Tooltip label='Share'>
+            <Tooltip label={hasCopied ? "Link Copied To Clipboard!" : "Share"}>
                 <IconButton
-                    aria-label="Toggle dark mode"
-                    icon={<ExternalLinkIcon />}
+                    aria-label="Share Article"
+                    icon={hasCopied ? <CheckCircleIcon /> : <ExternalLinkIcon />}
                     onClick={onShare}
                     color={iconColor[colorMode]}
+                    boxShadow="none !important"
                 />
             </Tooltip>
             <Tooltip label='Toggle Theme'>
@@ -60,6 +64,7 @@ const DarkModeSwitch = ({ showBackButton }) => {
                     icon={colorMode === 'dark' ? <SunIcon /> : <MoonIcon />}
                     onClick={toggleColorMode}
                     color={iconColor[colorMode]}
+                    boxShadow="none !important"
                 />
             </Tooltip>
         </Flex>

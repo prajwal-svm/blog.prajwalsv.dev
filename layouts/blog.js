@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Head from 'next/head'
 import { parseISO, format } from 'date-fns'
 import {
@@ -9,26 +9,48 @@ import {
     Stack,
     Avatar,
     Box,
-    Tag
 } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 
 import Container from '../components/Container'
 import BlogComments from '../components/BlogComments'
 import { primaryDarkColor } from '../styles/theme'
-import { FaBook, FaClock } from 'react-icons/fa'
-import { CalendarIcon } from '@chakra-ui/icons'
+import { FaChartBar, FaEye, FaRegClock } from 'react-icons/fa'
+import { CalendarIcon, ViewIcon } from '@chakra-ui/icons'
+import ViewCounter from '../components/ViewCounter'
 
 const capitalize = (s) => s.split('-').reduce((a, c) => `${a} ${c[0].toUpperCase()}${c.slice(1)}`, '')
 
 export default function BlogLayout({ children, frontMatter }) {
-    const { colorMode } = useColorMode()
+    const router = useRouter();
+    const slug = router.asPath.replace('/blog', '');
+
+    const { colorMode } = useColorMode();
+
+    useEffect(() => {
+
+        if (!slug) return;
+
+        if (localStorage.getItem(slug)) {
+            const lastViewed = new Date(localStorage.getItem(slug));
+            // If the last viewed time is less than 24 hours, don't count it.
+            if ((new Date() - lastViewed) < 1000 * 60 * 60 * 24) {
+                return;
+            }
+        }
+
+        localStorage.setItem(slug, new Date());
+
+        fetch(`/api/views/${slug}`, {
+            method: 'POST'
+        });
+    }, [slug]);
+
     const textColor = {
         light: 'gray.700',
         dark: 'gray.400'
     }
-    const router = useRouter()
-    const slug = router.asPath.replace('/blog', '')
+
     return (
         <Container showBackButton>
             <Head>
@@ -40,9 +62,10 @@ export default function BlogLayout({ children, frontMatter }) {
                 justifyContent="center"
                 alignItems="flex-start"
                 m="0 auto 4rem auto"
-                maxWidth="700px"
+                maxWidth="780px"
                 w="100%"
-                px={2}
+                px={10}
+                bg="#020817"
             >
                 <Flex
                     flexDirection="column"
@@ -57,14 +80,14 @@ export default function BlogLayout({ children, frontMatter }) {
 
                     <Flex
                         justify="space-between"
-                        alignItems={['initial', 'initial', 'center']}
-                        direction={['column', 'column', 'row']}
+                        alignItems={['initial', 'initial', 'initial', 'center']}
+                        direction={['column', 'column', 'column', 'row']}
                         mt={2}
                         w="100%"
                         mb={4}
                     >
 
-                        <Flex align="center">
+                        <Flex align="center" w="200px">
                             <Box
                                 w="38px"
                                 h="34px"
@@ -101,26 +124,38 @@ export default function BlogLayout({ children, frontMatter }) {
                             </Box>
                             <Text fontSize="sm" color={textColor[colorMode]}>
                                 {frontMatter.by}
-                                {'@Prajwal S Venkateshmurthy'}
+                                {'@Prajwal'}
 
                             </Text>
                         </Flex>
 
-                        <Box display="flex" justifyContent="space-between" w="340px" mt={{
-                            xs: 6,
-                            sm: 0
 
-                        }}>
+
+
+                        <Box display="flex" justifyContent="space-between" mt={{
+                            xs: 4,
+                            sm: 4,
+                            md: 0
+                        }}
+                            flexDirection={['column', 'column', 'row']}
+                            gap={[1, 1, 2, 6]}
+                        >
+
                             <Text fontSize="sm" variant='subtle' mt={[2, 0]} display="flex" alignItems="center" color={textColor[colorMode]}>
                                 <CalendarIcon />&nbsp;&nbsp;{format(parseISO(frontMatter.publishedAt), 'MMM dd, yyyy')}
                             </Text>
 
                             <Text fontSize="sm" variant='subtle' mt={[2, 0]} display="flex" alignItems="center" color={textColor[colorMode]}>
-                                <FaClock /> &nbsp;&nbsp;{frontMatter.readingTime.text}
+                                <FaEye />&nbsp;&nbsp;
+                                <ViewCounter slug={slug} />
                             </Text>
 
                             <Text fontSize="sm" variant='subtle' mt={[2, 0]} display="flex" alignItems="center" color={textColor[colorMode]}>
-                                <FaBook /> &nbsp;&nbsp;{frontMatter.wordCount} words
+                                <FaRegClock /> &nbsp;&nbsp;{frontMatter.readingTime.text}
+                            </Text>
+
+                            <Text fontSize="sm" variant='subtle' mt={[2, 0]} display="flex" alignItems="center" color={textColor[colorMode]}>
+                                <FaChartBar /> &nbsp;&nbsp;{frontMatter.wordCount} words
                             </Text>
                         </Box>
                     </Flex>

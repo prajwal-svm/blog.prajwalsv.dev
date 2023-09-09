@@ -1,10 +1,13 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {
     useColorMode,
     Text,
     Flex,
     Box,
     Avatar,
+    Button,
+    IconButton,
+    Tooltip
 } from '@chakra-ui/react'
 import NextLink from 'next/link'
 import styled from '@emotion/styled'
@@ -12,7 +15,7 @@ import DarkModeSwitch from './DarkModeSwitch'
 
 import { primaryDarkColor } from '../styles/theme'
 import Footer from './Footer'
-import { FaHome } from 'react-icons/fa'
+import { ArrowUpIcon } from '@chakra-ui/icons';
 
 const headingColor = {
     light: 'gray.700',
@@ -25,7 +28,30 @@ const titleColor = {
 }
 
 const Container = ({ children, showBackButton }) => {
-    const { colorMode } = useColorMode()
+    const { colorMode } = useColorMode();
+
+    const [isVisible, setIsVisible] = useState(false);
+
+    const scrollToTop = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth',
+        });
+    };
+
+    useEffect(() => {
+        const toggleVisibility = () => {
+            if (window.pageYOffset > window.innerHeight / 2) {
+                setIsVisible(true);
+            } else {
+                setIsVisible(false);
+            }
+        };
+
+        window.addEventListener('scroll', toggleVisibility);
+
+        return () => window.removeEventListener('scroll', toggleVisibility);
+    }, []);
 
     const bgColor = {
         light: 'white',
@@ -126,6 +152,29 @@ const Container = ({ children, showBackButton }) => {
             >
                 {children}
             </Flex>
+            {isVisible && (
+                <Tooltip label="Scroll to Top" placement="left" hasArrow>
+                    <Box
+                        onClick={scrollToTop}
+                        position='fixed'
+                        bottom='20px'
+                        right='20px'
+                        zIndex={3}
+                    >
+                        <IconButton
+                            aria-label='Scroll to Top'
+                            icon={<ArrowUpIcon />}
+                            size='lg'
+                            colorScheme='primary'
+                            isRound={true}
+                            variant='ghost'
+                            _hover={{ background: 'rgba(255,255,255,0.03)', border: "1px solid #2563eb" }}
+                            border="1px solid #233554"
+                            boxShadow='none !important'
+                        />
+                    </Box>
+                </Tooltip>
+            )}
             <Footer />
         </>
     )

@@ -3,6 +3,8 @@ import NextLink from 'next/link'
 import { useColorMode, Heading, Text, Flex, Box, Link, Tag } from '@chakra-ui/react'
 import { parseISO, format } from 'date-fns'
 import { CalendarIcon } from '@chakra-ui/icons'
+import { FaEye } from 'react-icons/fa'
+import ViewCounter from './ViewCounter'
 
 const BlogPost = ({ title, difficulty, publishedAt, summary, tags = "", slug }) => {
     const { colorMode } = useColorMode()
@@ -15,6 +17,11 @@ const BlogPost = ({ title, difficulty, publishedAt, summary, tags = "", slug }) 
         'Easy': 'teal',
         'Medium': 'yellow',
         'Hard': 'red',
+    }
+
+    const textColor = {
+        light: 'gray.700',
+        dark: 'gray.400'
     }
 
     return (
@@ -38,21 +45,21 @@ const BlogPost = ({ title, difficulty, publishedAt, summary, tags = "", slug }) 
                             </Tag>}
                         </Flex>
 
-                        <Flex alignItems="start" justifyContent="start" width="100%" mb="1" pt="1" >
-                            <CalendarIcon fontSize={11} color="#718096" />
-                            <Text
-                                color="gray.500"
-                                minWidth="140px"
-                                textAlign='left'
-                                ml="1.5"
-                                mt="-0.5"
-                                fontSize={10}
-                            >
-                                {format(parseISO(publishedAt), 'MMMM dd, yyyy')}
-                            </Text>
+                        <Flex w="auto" gap={3}>
+                            <Flex alignItems="start" justifyContent="start" width="100%" mb="1" pt="1" >
+                                <Text fontSize="10" variant='subtle' mt={[2, 0]} display="flex" alignItems="center" w="max-content" color={textColor[colorMode]}>
+                                    <CalendarIcon fontSize={11} color="#718096" />&nbsp;&nbsp;
+                                    {format(parseISO(publishedAt), 'MMMM dd, yyyy')}
+                                </Text>
+                            </Flex>
+
+                            <Flex alignItems="start" justifyContent="start" width="100%" mb="1" pt="1" >
+                                <Text fontSize="10" variant='subtle' mt={[2, 0]} display="flex" alignItems="center" color={textColor[colorMode]}>
+                                    <FaEye />&nbsp;&nbsp;
+                                    <ViewCounter slug={slug} />
+                                </Text>
+                            </Flex>
                         </Flex>
-
-
 
                     </Flex>
                     <Text fontSize={12} color={secondaryTextColor[colorMode]}>{summary}</Text>

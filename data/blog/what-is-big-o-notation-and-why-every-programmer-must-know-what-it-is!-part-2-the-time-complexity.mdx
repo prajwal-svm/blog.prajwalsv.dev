@@ -100,8 +100,9 @@ it's a simple return, which halts the function execution. The 3rd case obviously
 Arguably, the first and the second conditions, when executed are reducing the bounds by half each time. The question is how many times must we divide
 our input in half until we get down to 1? Assume there are `x` such divisions.
 
-```py
-n * 1/2 * 1/2 * 1/2 * 1/2 * .... = 1  # keep on reducing the bound by half until we go down to 1
+```py: 
+# keep on reducing the bound by half until we go down to 1
+n * 1/2 * 1/2 * 1/2 * 1/2 * .... = 1  
 ```
 
 On simplification, we get **n = 2<sup>x</sup>**, where `x` is the number of time we must divide to get down to 1. We don't know `x` yet but let's simplify further.

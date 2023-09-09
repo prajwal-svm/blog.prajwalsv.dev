@@ -18,7 +18,6 @@ import { getAllFilesFrontMatter } from '../lib/mdx'
 import BlogPost from '../components/BlogPost'
 import { SearchIcon } from '@chakra-ui/icons'
 
-// import { SearchIcon } from '@chakra-ui/icons'
 
 const headingColor = {
     light: 'gray.700',
