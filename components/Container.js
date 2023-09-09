@@ -168,9 +168,10 @@ const Container = ({ children, showBackButton }) => {
                             colorScheme='primary'
                             isRound={true}
                             variant='ghost'
-                            _hover={{ background: 'rgba(255,255,255,0.03)', border: "1px solid #2563eb" }}
+                            _hover={{ background: primaryDarkColor, border: "1px solid #2563eb" }}
                             border="1px solid #233554"
                             boxShadow='none !important'
+                            bg="#020817"
                         />
                     </Box>
                 </Tooltip>

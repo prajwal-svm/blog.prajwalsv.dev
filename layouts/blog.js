@@ -65,7 +65,6 @@ export default function BlogLayout({ children, frontMatter }) {
                 maxWidth="780px"
                 w="100%"
                 px={10}
-                bg="#020817"
             >
                 <Flex
                     flexDirection="column"
