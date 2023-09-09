@@ -121,15 +121,12 @@ export default function BlogLayout({ children, frontMatter }) {
                                     ml="4.5px"
                                 />
                             </Box>
-                            <Text fontSize="sm" color={textColor[colorMode]}>
+                            <Text fontSize="sm" color={textColor[colorMode]} >
                                 {frontMatter.by}
                                 {'@Prajwal'}
 
                             </Text>
                         </Flex>
-
-
-
 
                         <Box display="flex" justifyContent="space-between" mt={{
                             xs: 4,

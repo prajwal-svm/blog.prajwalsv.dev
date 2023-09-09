@@ -134,7 +134,17 @@ const Container = ({ children, showBackButton }) => {
                             BLOG 🚀
                         </Text>
                         <NextLink href="https://www.prajwalsv.dev" fontWeight={600} color={headingColor[colorMode]} cursor="pointer">
-                            <Text fontSize="10px" fontWeight={600} color={titleColor[colorMode]} cursor="pointer" _hover={{ color: "#16a34a" }}>Prajwal S Venkateshmurthy</Text>
+                            <Text
+                                fontSize="12px"
+                                fontWeight={600}
+                                color={titleColor[colorMode]}
+                                cursor="pointer"
+                                bgGradient='linear(to-r, #57ebde, #aefb2a)'
+                                bgClip='text'
+                                _hover={{ cursor: "pointer", color: "gray.200" }}
+                            >
+                                Prajwal S Venkateshmurthy
+                            </Text>
                         </NextLink>
 
                     </Flex>
