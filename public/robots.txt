@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /admin
+Disallow: /secret-page
+
+Sitemap: https://blog.prajwalsv.dev/sitemap.xml
