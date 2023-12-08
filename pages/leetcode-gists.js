@@ -79,8 +79,8 @@ export default function Blog({ posts }) {
                             {
                                 Object.keys(data)
                                     .sort((a, b) => a - b)
-                                    .map(filename =>
-                                        <NextLink borderRadius={10} href={`${data[filename]}`} passHref>
+                                    .map((filename, i) =>
+                                        <NextLink key={i} borderRadius={10} href={`${data[filename]}`} passHref>
                                             <Link mt={8} key={filename} isExternal >
                                                 {filename} <ExternalLinkIcon mx='2px' />
                                             </Link>
