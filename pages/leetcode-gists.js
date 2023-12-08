@@ -1,18 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import Head from 'next/head'
 import {
-    Heading,
     Flex,
     Stack,
-    Input,
-    InputGroup,
-    InputRightElement,
     Text,
     useColorMode,
     Link,
     Icon
 } from '@chakra-ui/react'
 import { SiLeetcode } from "react-icons/si";
+import NextLink from 'next/link'
 
 import Container from '../components/Container'
 import BlogPost from '../components/BlogPost'
@@ -82,9 +79,13 @@ export default function Blog({ posts }) {
                             {
                                 Object.keys(data)
                                     .sort((a, b) => a - b)
-                                    .map(filename => <Link mt={8} key={filename} isExternal>
-                                        {filename} <ExternalLinkIcon mx='2px' />
-                                    </Link>)
+                                    .map(filename =>
+                                        <NextLink borderRadius={10} href={`${data[filename]}`} passHref>
+                                            <Link mt={8} key={filename} isExternal >
+                                                {filename} <ExternalLinkIcon mx='2px' />
+                                            </Link>
+                                        </NextLink>
+                                    )
                             }
                         </Flex>
                     </Flex>

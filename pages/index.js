@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import Head from 'next/head'
 import {
-    Heading,
     Flex,
     Stack,
     Input,
@@ -9,9 +8,11 @@ import {
     InputRightElement,
     Text,
     useColorMode,
-    Image,
-    Grid
+    Grid,
+    Center
 } from '@chakra-ui/react'
+
+import Image from 'next/image'
 
 import Container from '../components/Container'
 import { getAllFilesFrontMatter } from '../lib/mdx'
@@ -84,10 +85,14 @@ export default function Blog({ posts }) {
                                 <SearchIcon w={4} h={4} color={headingColor[colorMode]} mb="0" mr="2" />
                             </InputRightElement>
                         </InputGroup>
-                        {!filteredBlogPosts.length && <Text width='100%' align="center" fontSize="16px" color={headingColor[colorMode]}>
-                            <Image src="/empty_blog.svg" w="80" h="60" m="auto" pb="10" />
-                            No posts found. Perhaps you could try a less specific search phrase.
-                        </Text>}
+                        {!filteredBlogPosts.length &&
+                            <Flex w="100%" justify="center" alignItems="center" flexDirection="column">
+                                <Image src="/empty_blog.svg" width="300px" height="300px" />
+                                <Text width='100%' align="center" fontSize="16px" color={headingColor[colorMode]} pt="10">
+                                    No posts found. Perhaps you could try a less specific search phrase.
+                                </Text>
+                            </Flex>
+                        }
                         <Grid templateColumns='repeat(1, 1fr)' gap={4}>
                             {filteredBlogPosts.map((frontMatter) => <BlogPost key={frontMatter.title} {...frontMatter} />)}
                         </Grid>
