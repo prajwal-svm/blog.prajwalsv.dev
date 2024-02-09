@@ -25,10 +25,16 @@ export default async (req, res) => {
             return res.status(200).json({
                 total: data[0]?.view_count || null
             });
+        } else {
+            return res.status(200).json({
+                total: null
+            });
         }
     }
 
+    console.log('Unsupported Request', req.method, req.query.slug);
+
     return res.status(400).json({
-        message: 'Unsupported Request'
+        message: `Unsupported Request: ${req.method} ${req.query.slug}`
     });
 };
